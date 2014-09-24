@@ -13,6 +13,7 @@ include_recipe "raven_statsd::carbon"
 # configure auth database and storage paths
 template "/etc/graphite-web/local_settings.py" do
 	source "local_settings.py.erb"
+	mode 0644
 	variables ({
 			:storage_dir => node[:raven_statsd][:storage_dir],
 			:secret_key => node[:raven_statsd][:secret_key],
