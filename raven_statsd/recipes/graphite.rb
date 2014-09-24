@@ -15,7 +15,7 @@ file "/etc/graphite-web/local_settings.py" do
 LOG_DIR = "#{node[:raven_statsd][:storage_dir]}"
 INDEX_FILE = "#{node[:raven_statsd][:storage_dir]}/index"
 SECRET_KEY = "#{node[:raven_statsd][:secret_key]}"
-WHISPER_DIR = "#{storage_dir}/whisper/"
+WHISPER_DIR = "#{node[:raven_statsd][:storage_dir]}/whisper/"
 DATABASES = {
     'default': {
         'NAME': '#{node[:raven_statsd][:storage_dir]}/graphite.db',
