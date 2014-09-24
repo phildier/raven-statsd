@@ -29,6 +29,5 @@ retentions = 10:2160,60:10080,600:262974
 end
 
 service "carbon-cache" do
-	action :nothing
-	supports [:reload]
+	action [:start, :enable]
 end

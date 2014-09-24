@@ -46,6 +46,34 @@
 
       ],
       "calculated": false
+    },
+    "raven_statsd/graphite/fqdn": {
+      "display_name": "Graphite FQDN",
+      "description": "Graphite FQDN",
+      "required": "required",
+      "type": "string",
+      "recipes": [
+        "raven_statsd::grafana",
+        "raven_statsd::graphite"
+      ],
+      "choice": [
+
+      ],
+      "calculated": false
+    },
+    "raven_statsd/grafana/fqdn": {
+      "display_name": "Grafana FQDN",
+      "description": "Grafana FQDN",
+      "required": "required",
+      "type": "string",
+      "recipes": [
+        "raven_statsd::grafana",
+        "raven_statsd::graphite"
+      ],
+      "choice": [
+
+      ],
+      "calculated": false
     }
   },
   "groupings": {
@@ -57,7 +85,9 @@
     "raven_statsd::graphite": "install/configure graphite and dependencies",
     "raven_statsd::carbon": "install/configure carbon. included by graphite recipe",
     "raven_statsd::statsd": "install/configure statsd and dependencies",
-    "raven_statsd::supervisor": "install/configure supervisor and dependencies"
+    "raven_statsd::supervisor": "install/configure supervisor and dependencies",
+    "raven_statsd::grafana": "install/configure grafana",
+    "raven_statsd::elasticsearch": "install/configure elasticsearch for grafana"
   },
   "version": "0.1.0"
 }

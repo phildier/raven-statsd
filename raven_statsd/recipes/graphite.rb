@@ -9,29 +9,24 @@ package "memcached"
 
 include_recipe "raven_statsd::carbon"
 
-# configure auth database
-file "/etc/graphite-web/local_settings.py" do
-	content <<-EOH
-LOG_DIR = "#{node[:raven_statsd][:storage_dir]}"
-INDEX_FILE = "#{node[:raven_statsd][:storage_dir]}/index"
-SECRET_KEY = "#{node[:raven_statsd][:secret_key]}"
-WHISPER_DIR = "#{node[:raven_statsd][:storage_dir]}/whisper/"
-DATABASES = {
-    'default': {
-        'NAME': '#{node[:raven_statsd][:storage_dir]}/graphite.db',
-        'ENGINE': 'django.db.backends.sqlite3',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': ''
-    }
-}
-	EOH
+# configure auth database and storage paths
+template "/etc/graphite-web/local_settings.py" do
+	source "local_settings.py.erb"
+	variables ({
+			:storage_dir => node[:raven_statsd][:storage_dir],
+			:secret_key => node[:raven_statsd][:secret_key],
+			})
 	notifies :restart, "service[httpd]", :delayed
 end
 
-service "carbon-cache" do
-	action [:start, :enable]
+# tweak graphite vhost
+template "/etc/httpd/conf.d/graphite-web.conf" do
+	source "graphite-vhost.conf.erb"
+	variables ({
+			:server_name => node[:raven_statsd][:graphite][:fqdn],
+			:document_root => "/usr/share/graphite/webapp",
+			:grafana_host => node[:raven_statsd][:grafana][:fqdn]
+			})
 end
 
 service "memcached" do

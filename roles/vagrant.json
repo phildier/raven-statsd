@@ -15,7 +15,9 @@
 	"raven_statsd::vagrant",
 	"raven_statsd::epel",
 	"raven_statsd::graphite",
-	"raven_statsd::statsd"
+	"raven_statsd::statsd",
+	"raven_statsd::elasticsearch",
+	"raven_statsd::grafana"
   ],
   "env_run_lists": {
   }
