@@ -27,6 +27,7 @@ end
 
 template "#{node[:raven_statsd][:grafana][:install_dir]}/config.js" do
 	source "grafana-config.js.erb"
+	mode 0644
 	variables ({
 			:graphite_host => node[:raven_statsd][:graphite][:fqdn],
 			:grafana_host => node[:raven_statsd][:grafana][:fqdn],
