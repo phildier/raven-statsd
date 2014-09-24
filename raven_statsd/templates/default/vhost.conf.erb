@@ -1,8 +1,7 @@
 NameVirtualHost *:80
 
 <VirtualHost *:80>
-	ServerName <%=@server_name%>
-	ServerAlias <%=@fqdn%>
+	ServerName <%=@fqdn%>
 	DocumentRoot "<%=@document_root%>"
 	ErrorLog /var/log/httpd/<%=@server_name%>-error.log
 	CustomLog /var/log/httpd/<%=@server_name%>-access.log common
