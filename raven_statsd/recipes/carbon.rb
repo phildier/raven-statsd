@@ -3,6 +3,8 @@ storage_dir = node[:raven_statsd][:storage_dir]
 
 directory storage_dir do
 	recursive true
+	owner "apache"
+	group "apache"
 end
 
 template "/etc/carbon/carbon.conf" do
