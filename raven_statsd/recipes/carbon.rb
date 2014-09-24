@@ -18,6 +18,16 @@ template "/etc/carbon/carbon.conf" do
 	notifies :reload, "service[carbon-cache]", :delayed
 end
 
+file "/etc/carbon/storage-schemas.conf" do
+	content <<-EOH
+[stats]
+priority = 110
+pattern = ^stats\..*
+retentions = 10:2160,60:10080,600:262974
+	EOH
+	notifies :reload, "service[carbon-cache]", :delayed
+end
+
 service "carbon-cache" do
 	action :nothing
 	supports [:reload]
