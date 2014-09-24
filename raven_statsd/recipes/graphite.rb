@@ -13,6 +13,7 @@ include_recipe "raven_statsd::carbon"
 file "/etc/graphite-web/local_settings.py" do
 	content <<-EOH
 LOG_DIR = "#{node[:raven_statsd][:storage_dir]}"
+INDEX_FILE = '#{node[:raven_statsd][:storage_dir]}/index'
 SECRET_KEY = "#{node[:raven_statsd][:secret_key]}"
 DATABASES = {
     'default': {
@@ -25,6 +26,7 @@ DATABASES = {
     }
 }
 	EOH
+	notifies :restart, "service[httpd]", :delayed
 end
 
 service "carbon-cache" do
