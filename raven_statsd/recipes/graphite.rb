@@ -1,10 +1,11 @@
 
+include_recipe "raven_statsd::default"
+
 package "python-whisper"
 package "python-carbon"
 package "graphite-web"
 package "python-memcached"
 package "python-ldap"
-package "httpd"
 package "memcached"
 
 include_recipe "raven_statsd::carbon"
@@ -30,9 +31,5 @@ template "/etc/httpd/conf.d/graphite-web.conf" do
 end
 
 service "memcached" do
-	action [:start, :enable]
-end
-
-service "httpd" do
 	action [:start, :enable]
 end

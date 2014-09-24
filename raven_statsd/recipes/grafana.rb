@@ -1,4 +1,6 @@
 
+include_recipe "raven_statsd::default"
+
 grafana_tarball = "#{node[:raven_statsd][:tmp_dir]}/grafana.tar.gz"
 remote_file grafana_tarball do
 	source "http://grafanarel.s3.amazonaws.com/grafana-1.8.0.tar.gz"
