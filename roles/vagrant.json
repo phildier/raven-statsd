@@ -1,0 +1,22 @@
+{
+  "name": "vagrant",
+  "description": "configure statsd in vagrant",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "override_attributes": {
+	  "raven_statsd":{
+		  "init_database":"true",
+		  "secret_key":"deadbeef"
+	  }
+  },
+  "chef_type": "role",
+  "run_list": [
+	"raven_statsd::vagrant",
+	"raven_statsd::epel",
+	"raven_statsd::graphite",
+	"raven_statsd::statsd"
+  ],
+  "env_run_lists": {
+  }
+}

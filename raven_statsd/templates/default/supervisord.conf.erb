@@ -1,0 +1,24 @@
+[unix_http_server]
+file=/var/run/supervisor.sock   ; (the path to the socket file)
+chmod=0700
+
+[inet_http_server]
+port = :9110
+username = super
+password = 92617462d03666a6a11f6e48d41c9cf1
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisord]
+logfile = /var/log/supervisord.conf
+logfile_maxbytes = 10MB
+logfile_backups = 5
+loglevel = warn
+pidfile = /var/run/supervisord.pid
+
+[supervisorctl]
+serverurl=unix:///var/run/supervisor.sock
+
+[include]
+files = /etc/supervisor.d/*.conf
