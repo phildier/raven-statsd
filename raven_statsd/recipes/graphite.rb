@@ -12,6 +12,7 @@ include_recipe "raven_statsd::carbon"
 # configure auth database
 file "/etc/graphite-web/local_settings.py" do
 	content <<-EOH
+LOG_DIR = "#{node[:raven_statsd][:storage_dir]}"
 SECRET_KEY = "#{node[:raven_statsd][:secret_key]}"
 DATABASES = {
     'default': {
