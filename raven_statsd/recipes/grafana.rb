@@ -11,7 +11,8 @@ directory node[:raven_statsd][:grafana][:install_dir] do
 end
 
 execute "unpack-grafana-tarball" do
-	command "tar xf #{grafana_tarball} -C #{node[:raven_statsd][:grafana][:install_dir]}"
+	command "tar xf #{grafana_tarball} -C #{node[:raven_statsd][:grafana][:install_dir]} --strip=1"
+	not_if { ::File.exists?("#{node[:raven_statsd][:grafana][:install_dir]}/config.sample.js") }
 end
 
 template "/etc/httpd/conf.d/grafana.conf" do
