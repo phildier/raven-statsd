@@ -15,7 +15,7 @@ template "/etc/carbon/carbon.conf" do
 			:log_dir => "/var/log/carbon",
 			:pid_dir => "/var/run"
 			})
-	notifies :reload, "service[carbon-cache]", :delayed
+	notifies :restart, "service[carbon-cache]", :delayed
 end
 
 file "/etc/carbon/storage-schemas.conf" do
@@ -25,7 +25,7 @@ priority = 110
 pattern = ^stats\..*
 retentions = 10:2160,60:10080,600:262974
 	EOH
-	notifies :reload, "service[carbon-cache]", :delayed
+	notifies :restart, "service[carbon-cache]", :delayed
 end
 
 service "carbon-cache" do
