@@ -10,7 +10,7 @@ directory node[:raven_statsd][:grafana][:install_dir] do
 	recursive true
 end
 
-bash "unpack-grafana-tarball" do
+execute "unpack-grafana-tarball" do
 	command "tar xf #{grafana_tarball} -C #{node[:raven_statsd][:grafana][:install_dir]}"
 end
 
