@@ -21,7 +21,7 @@ template "/etc/httpd/conf.d/grafana.conf" do
 			:document_root => node[:raven_statsd][:grafana][:install_dir],
 			:fqdn =>  node[:raven_statsd][:grafana][:fqdn]
 			})
-	notifies :reload, "service[httpd]", :delayed
+	notifies :restart, "service[httpd]", :delayed
 end
 
 template "#{node[:raven_statsd][:grafana][:install_dir]}/config.js" do
