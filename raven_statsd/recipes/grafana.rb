@@ -3,7 +3,7 @@ include_recipe "raven_statsd::default"
 
 grafana_tarball = "#{node[:raven_statsd][:tmp_dir]}/grafana.tar.gz"
 remote_file grafana_tarball do
-	source "http://grafanarel.s3.amazonaws.com/grafana-1.8.0.tar.gz"
+	source "http://grafanarel.s3.amazonaws.com/grafana-1.9.1.tar.gz"
 end
 
 directory node[:raven_statsd][:grafana][:install_dir] do
