@@ -1,5 +1,7 @@
 include_recipe "raven_statsd::supervisor"
 
+include_recipe "raven_statsd::graphite"
+
 package "python-bucky"
 
 template "/etc/supervisor.d/statsd.conf" do
@@ -13,3 +15,6 @@ template "/etc/supervisor.d/statsd.conf" do
 			})
 	notifies :restart, "service[supervisord]", :delayed
 end
+
+include_recipe "raven_statsd::elasticsearch"
+include_recipe "raven_statsd::graphana"
