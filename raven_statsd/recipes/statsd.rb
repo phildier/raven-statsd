@@ -1,5 +1,8 @@
-include_recipe "raven_statsd::supervisor"
+# insure apache user and group exists
+user "apache"
+group "apache"
 
+include_recipe "raven_statsd::supervisor"
 include_recipe "raven_statsd::graphite"
 
 package "python-bucky"
