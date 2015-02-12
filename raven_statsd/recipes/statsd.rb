@@ -17,4 +17,4 @@ template "/etc/supervisor.d/statsd.conf" do
 end
 
 include_recipe "raven_statsd::elasticsearch"
-include_recipe "raven_statsd::graphana"
+include_recipe "raven_statsd::grafana"
