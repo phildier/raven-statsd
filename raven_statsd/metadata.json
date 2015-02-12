@@ -54,7 +54,8 @@
       "type": "string",
       "recipes": [
         "raven_statsd::grafana",
-        "raven_statsd::graphite"
+        "raven_statsd::graphite",
+        "raven_statsd::statsd"
       ],
       "choice": [
 
@@ -68,7 +69,8 @@
       "type": "string",
       "recipes": [
         "raven_statsd::grafana",
-        "raven_statsd::graphite"
+        "raven_statsd::graphite",
+        "raven_statsd::statsd"
       ],
       "choice": [
 

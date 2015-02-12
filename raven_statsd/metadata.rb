@@ -36,11 +36,11 @@ attribute "raven_statsd/graphite/fqdn",
 	:description => "Graphite FQDN",
 	:required => "required",
 	:type => "string",
-	:recipes => ["raven_statsd::grafana","raven_statsd::graphite"]
+	:recipes => ["raven_statsd::grafana","raven_statsd::graphite","raven_statsd::statsd"]
 
 attribute "raven_statsd/grafana/fqdn",
 	:display_name => "Grafana FQDN",
 	:description => "Grafana FQDN",
 	:required => "required",
 	:type => "string",
-	:recipes => ["raven_statsd::grafana","raven_statsd::graphite"]
+	:recipes => ["raven_statsd::grafana","raven_statsd::graphite","raven_statsd::statsd"]
