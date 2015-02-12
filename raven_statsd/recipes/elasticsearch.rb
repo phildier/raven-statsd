@@ -15,6 +15,19 @@ link "/usr/bin/elasticsearch" do
 	to "/usr/share/elasticsearch/bin/elasticsearch"
 end
 
+es_data_dir = "#{node[:raven_statsd][:storage_dir]}/elasticsearch"
+
+directory es_data_dir do
+	owner "elasticsearch"
+end
+
+template "/etc/sysconfig/elasticsearch" do
+	source "elasticsearch.sysconfig.erb"
+	variables ({
+			:data_dir => es_data_dir
+			})
+end
+
 service "elasticsearch" do
 	action [:enable, :start]
 end
