@@ -8,6 +8,7 @@
   "platforms": {
   },
   "dependencies": {
+    "influxdb": ">= 0.0.0"
   },
   "recommendations": {
   },
@@ -20,48 +21,6 @@
   "replacing": {
   },
   "attributes": {
-    "raven_statsd/storage_dir": {
-      "display_name": "Graphite Storage Directory",
-      "description": "Path to graphite stats storage",
-      "required": "recommended",
-      "default": "/var/lib/graphite",
-      "type": "string",
-      "recipes": [
-        "raven_statsd::mount"
-      ],
-      "choice": [
-
-      ],
-      "calculated": false
-    },
-    "raven_statsd/storage_device": {
-      "display_name": "Graphite Storage Device",
-      "description": "Device to mount to storage directory",
-      "required": "optional",
-      "type": "string",
-      "recipes": [
-        "raven_statsd::mount"
-      ],
-      "choice": [
-
-      ],
-      "calculated": false
-    },
-    "raven_statsd/graphite/fqdn": {
-      "display_name": "Graphite FQDN",
-      "description": "Graphite FQDN",
-      "required": "required",
-      "type": "string",
-      "recipes": [
-        "raven_statsd::grafana",
-        "raven_statsd::graphite",
-        "raven_statsd::statsd"
-      ],
-      "choice": [
-
-      ],
-      "calculated": false
-    },
     "raven_statsd/grafana/fqdn": {
       "display_name": "Grafana FQDN",
       "description": "Grafana FQDN",
@@ -69,8 +28,35 @@
       "type": "string",
       "recipes": [
         "raven_statsd::grafana",
-        "raven_statsd::graphite",
-        "raven_statsd::statsd"
+        "raven_statsd::statsd_server"
+      ],
+      "choice": [
+
+      ],
+      "calculated": false
+    },
+    "raven_statsd/influxdb/host": {
+      "display_name": "InfluxDB Host:Port",
+      "description": "InfluxDB Host:Port",
+      "required": "required",
+      "type": "string",
+      "recipes": [
+        "raven_statsd::grafana",
+        "raven_statsd::statsd_server"
+      ],
+      "choice": [
+
+      ],
+      "calculated": false
+    },
+    "raven_statsd/influxdb/storage_dir": {
+      "display_name": "InfluxDB Storage Directory",
+      "description": "InfluxDB Storage Directory",
+      "required": "required",
+      "type": "string",
+      "recipes": [
+        "raven_statsd::influxdb",
+        "raven_statsd::statsd_server"
       ],
       "choice": [
 
@@ -83,13 +69,11 @@
   "recipes": {
     "raven_statsd::default": "install/configure dependencies",
     "raven_statsd::epel": "sets up epel repository",
-    "raven_statsd::mount": "mounts storage volume",
-    "raven_statsd::graphite": "install/configure graphite and dependencies",
-    "raven_statsd::carbon": "install/configure carbon. included by graphite recipe",
-    "raven_statsd::statsd": "install/configure statsd and dependencies",
+    "raven_statsd::bucky": "install/configure bucky statsd daemon",
     "raven_statsd::supervisor": "install/configure supervisor and dependencies",
     "raven_statsd::grafana": "install/configure grafana",
-    "raven_statsd::elasticsearch": "install/configure elasticsearch for grafana"
+    "raven_statsd::influxdb": "install/configure influxdb",
+    "raven_statsd::statsd_server": "installs and configures all dependencies for a stats server"
   },
   "version": "0.1.0"
 }
