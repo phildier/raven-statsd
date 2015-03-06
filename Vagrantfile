@@ -5,11 +5,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 	config.vm.box = "centos64"
 	config.vm.network :private_network, ip: "192.168.34.10"
-	config.vm.network :forwarded_port, guest: 80, host: 8099
-	config.vm.network :forwarded_port, guest: 9200, host: 9200 # elasticsearch
+	config.vm.network :forwarded_port, guest: 80, host: 8099 # http
+	config.vm.network :forwarded_port, guest: 8086, host: 8086 # influxdb
+
+	config.vm.provision :shell, path: "scripts/vagrant_bootstrap.sh"
 
 	config.vm.provision :chef_solo do |chef|
-		chef.cookbooks_path = "."
+		chef.cookbooks_path = [".","berks-cookbooks"]
 		chef.roles_path = "roles"
 		chef.add_role "vagrant"
 	end

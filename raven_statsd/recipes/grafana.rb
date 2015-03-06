@@ -29,7 +29,9 @@ template "#{node[:raven_statsd][:grafana][:install_dir]}/config.js" do
 	source "grafana-config.js.erb"
 	mode 0644
 	variables ({
-			:graphite_host => node[:raven_statsd][:graphite][:fqdn],
+			:influxdb_host=> node[:raven_statsd][:influxdb][:host],
+			:influxdb_user=> node[:raven_statsd][:influxdb][:user],
+			:influxdb_password => node[:raven_statsd][:influxdb][:password],
 			:grafana_host => node[:raven_statsd][:grafana][:fqdn],
 			:password => "confirm",
 			:title_prefix => "Raven Graphs"

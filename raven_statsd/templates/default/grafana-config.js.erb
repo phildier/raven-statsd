@@ -2,14 +2,17 @@ define(['settings'],
 function (Settings) {
 	return new Settings({
 		datasources: {
-			graphite: {
-				type: 'graphite',
-				url: "http://<%=@graphite_host%>",
+			RavenStats:{
+				type: 'influxdb',
+				url: 'http://<%=@influxdb_host%>/db/stats',
+				username: '<%=@influxdb_user%>',
+				password: '<%=@influxdb_password%>',
 			},
-			elasticsearch: {
-				type: 'elasticsearch',
-				url: "http://<%=@grafana_host%>:9200",
-				index: 'grafana-dash',
+			grafana: {
+				type: 'influxdb',
+				url: 'http://<%=@influxdb_host%>/db/grafana',
+				username: '<%=@influxdb_user%>',
+				password: '<%=@influxdb_password%>',
 				grafanaDB: true,
 			}
 		},
