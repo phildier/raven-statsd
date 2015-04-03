@@ -46,5 +46,5 @@ end
 
 influxdb_user node[:raven_statsd][:influxdb][:user] do
 	password node[:raven_statsd][:influxdb][:password]
-	databases if_dbs
+	dbadmin if_dbs
 end
