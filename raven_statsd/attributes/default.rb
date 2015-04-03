@@ -9,6 +9,6 @@ default[:raven_statsd][:grafana][:fqdn] = "grafana.site"
 default[:raven_statsd][:grafana][:install_dir] = "/usr/share/grafana"
 
 default[:raven_statsd][:influxdb][:host] = "grafana.site:8086"
-default[:raven_statsd][:influxdb][:user] = "grafana"
+default[:raven_statsd][:influxdb][:user] = "grafana_admin"
 default[:raven_statsd][:influxdb][:password] = "swasang4"
 default[:raven_statsd][:influxdb][:storage_dir] = "/var/lib/influxdb"
