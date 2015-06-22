@@ -1,5 +1,5 @@
 remote_file "/tmp/influxdb_latest.rpm" do
-	source "http://s3.amazonaws.com/influxdb/influxdb-latest-1.x86_64.rpm"
+	source "https://s3.amazonaws.com/influxdb/influxdb-0.8.8-1.x86_64.rpm"
 end
 
 rpm_package "influxdb" do
