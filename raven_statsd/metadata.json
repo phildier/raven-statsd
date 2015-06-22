@@ -6,19 +6,26 @@
   "maintainer_email": "YOUR_EMAIL",
   "license": "All rights reserved",
   "platforms": {
+
   },
   "dependencies": {
-    "influxdb": ">= 0.0.0"
+    "influxdb": ">= 0.0.0",
+    "iptables": ">= 0.0.0"
   },
   "recommendations": {
+
   },
   "suggestions": {
+
   },
   "conflicting": {
+
   },
   "providing": {
+
   },
   "replacing": {
+
   },
   "attributes": {
     "raven_statsd/grafana/fqdn": {
@@ -65,6 +72,7 @@
     }
   },
   "groupings": {
+
   },
   "recipes": {
     "raven_statsd::default": "install/configure dependencies",
@@ -75,5 +83,7 @@
     "raven_statsd::influxdb": "install/configure influxdb",
     "raven_statsd::statsd_server": "installs and configures all dependencies for a stats server"
   },
-  "version": "0.1.0"
+  "version": "0.2.0",
+  "source_url": "",
+  "issues_url": ""
 }
