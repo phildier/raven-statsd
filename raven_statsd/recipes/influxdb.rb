@@ -22,6 +22,9 @@ log_dir = "#{node[:raven_statsd][:influxdb][:storage_dir]}/log"
 		user "influxdb"
 		group "influxdb"
 	end
+
+	# insure ownership is correct when initializing from an existing snapshot
+	execute "chown -R influxdb: #{d}"
 end
 
 template "/opt/influxdb/shared/config.toml" do
