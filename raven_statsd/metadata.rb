@@ -17,6 +17,13 @@ recipe "raven_statsd::grafana",			"install/configure grafana"
 recipe "raven_statsd::influxdb",		"install/configure influxdb"
 recipe "raven_statsd::statsd_server",	"installs and configures all dependencies for a stats server"
 
+attribute "raven_statsd/server/root_url",
+	:display_name => "Grafana Root URL",
+	:description => "Grafana Root URL",
+	:required => "required",
+	:type => "string",
+	:recipes => ["raven_statsd::grafana","raven_statsd::statsd_server"]
+
 attribute "raven_statsd/grafana/fqdn",
 	:display_name => "Grafana FQDN",
 	:description => "Grafana FQDN",

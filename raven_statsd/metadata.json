@@ -28,6 +28,20 @@
 
   },
   "attributes": {
+    "raven_statsd/server/root_url": {
+      "display_name": "Grafana Root URL",
+      "description": "Grafana Root URL",
+      "required": "required",
+      "type": "string",
+      "recipes": [
+        "raven_statsd::grafana",
+        "raven_statsd::statsd_server"
+      ],
+      "choice": [
+
+      ],
+      "calculated": false
+    },
     "raven_statsd/grafana/fqdn": {
       "display_name": "Grafana FQDN",
       "description": "Grafana FQDN",

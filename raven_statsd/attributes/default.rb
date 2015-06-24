@@ -14,6 +14,7 @@ default[:raven_statsd][:influxdb][:user] = "grafana"
 default[:raven_statsd][:influxdb][:password] = "grafana"
 default[:raven_statsd][:influxdb][:storage_dir] = "/var/lib/influxdb"
 
+default[:raven_statsd][:server][:root_url] = 'http://localhost:8099/'
 default[:raven_statsd][:google][:client_id] = nil
 default[:raven_statsd][:google][:client_secret] = nil
 default[:raven_statsd][:google][:domain] = "example.com"
