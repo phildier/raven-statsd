@@ -22,7 +22,8 @@ template "/etc/grafana/grafana.ini" do
 			:google_client_secret => node[:raven_statsd][:google][:client_secret],
 			:google_domain => node[:raven_statsd][:google][:domain],
 			:admin_username => node[:raven_statsd][:admin][:username],
-			:admin_password => node[:raven_statsd][:admin][:password]
+			:admin_password => node[:raven_statsd][:admin][:password],
+			:root_url => node[:raven_statsd][:server][:root_url]
 			})
 	notifies :restart, "service[grafana-server]", :delayed
 end
