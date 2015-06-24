@@ -11,5 +11,12 @@ default[:raven_statsd][:grafana][:public_dir] = "/usr/share/grafana/public"
 
 default[:raven_statsd][:influxdb][:host] = "grafana.site:8086"
 default[:raven_statsd][:influxdb][:user] = "grafana"
-default[:raven_statsd][:influxdb][:password] = "swasang4"
+default[:raven_statsd][:influxdb][:password] = "grafana"
 default[:raven_statsd][:influxdb][:storage_dir] = "/var/lib/influxdb"
+
+default[:raven_statsd][:google][:client_id] = nil
+default[:raven_statsd][:google][:client_secret] = nil
+default[:raven_statsd][:google][:domain] = "example.com"
+default[:raven_statsd][:admin][:username] = "admin"
+default[:raven_statsd][:admin][:password] = "admin"
+

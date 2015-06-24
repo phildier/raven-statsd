@@ -3,6 +3,12 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+    if ::File.exists? "overrides.json" then
+        overrides = JSON.parse(File.open("overrides.json").read)
+    else
+        overrides = {}
+    end
+
 	config.vm.box = "centos64"
 	config.vm.network :private_network, ip: "192.168.34.10"
 	config.vm.network :forwarded_port, guest: 80, host: 8099 # http
@@ -14,6 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		chef.cookbooks_path = [".","berks-cookbooks"]
 		chef.roles_path = "roles"
 		chef.add_role "vagrant"
+		chef.json = overrides
 	end
 
 	config.vm.provider :virtualbox do |vb|
