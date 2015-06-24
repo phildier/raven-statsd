@@ -35,7 +35,7 @@ template "/opt/influxdb/shared/config.toml" do
 			:raft_dir => raft_dir,
 			:writeaheadlog_dir => wal_dir
 			})
-	notifies :restart, "service[influxdb]", :immediately
+	notifies :restart, "service[influxdb]", :delayed
 end
 
 service "influxdb" do
