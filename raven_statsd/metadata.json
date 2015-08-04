@@ -9,8 +9,7 @@
 
   },
   "dependencies": {
-    "influxdb": ">= 0.0.0",
-    "iptables": ">= 0.0.0"
+    "influxdb": ">= 0.0.0"
   },
   "recommendations": {
 

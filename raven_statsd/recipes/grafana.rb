@@ -37,12 +37,3 @@ end
 service "grafana-server" do
 	action [ :start, :enable ]
 end
-
-# redirect 80 to 3000
-iptables_rule "grafana_80" do
-	action :enable
-end
-
-service "iptables" do
-	action [ :start, :enable ]
-end

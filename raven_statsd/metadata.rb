@@ -7,7 +7,6 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version		  '0.2.0'
 
 depends "influxdb"
-depends "iptables"
 
 recipe "raven_statsd::default",			"install/configure dependencies"
 recipe "raven_statsd::epel",			"sets up epel repository"
