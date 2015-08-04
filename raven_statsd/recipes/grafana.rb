@@ -15,6 +15,11 @@ cookbook_file "/etc/init.d/grafana-server" do
 	mode 0755
 end
 
+directory node[:raven_statsd][:grafana][:data_dir] do
+	user "grafana"
+	group "grafana"
+end
+
 template "/etc/grafana/grafana.ini" do
 	source "grafana.ini.erb"
 	variables ({
@@ -23,7 +28,8 @@ template "/etc/grafana/grafana.ini" do
 			:google_domain => node[:raven_statsd][:google][:domain],
 			:admin_username => node[:raven_statsd][:admin][:username],
 			:admin_password => node[:raven_statsd][:admin][:password],
-			:root_url => node[:raven_statsd][:server][:root_url]
+			:root_url => node[:raven_statsd][:server][:root_url],
+			:data_dir => node[:raven_statsd][:grafana][:data_dir]
 			})
 	notifies :restart, "service[grafana-server]", :delayed
 end

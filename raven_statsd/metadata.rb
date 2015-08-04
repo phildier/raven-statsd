@@ -24,6 +24,13 @@ attribute "raven_statsd/server/root_url",
 	:type => "string",
 	:recipes => ["raven_statsd::grafana","raven_statsd::statsd_server"]
 
+attribute "raven_statsd/grafana/data_dir",
+	:display_name => "Grafana Storage Directory",
+	:description => "Grafana Storage Directory",
+	:required => "required",
+	:type => "string",
+	:recipes => ["raven_statsd::statsd_server"]
+
 attribute "raven_statsd/grafana/fqdn",
 	:display_name => "Grafana FQDN",
 	:description => "Grafana FQDN",

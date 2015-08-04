@@ -42,6 +42,19 @@
       ],
       "calculated": false
     },
+    "raven_statsd/grafana/data_dir": {
+      "display_name": "Grafana Storage Directory",
+      "description": "Grafana Storage Directory",
+      "required": "required",
+      "type": "string",
+      "recipes": [
+        "raven_statsd::statsd_server"
+      ],
+      "choice": [
+
+      ],
+      "calculated": false
+    },
     "raven_statsd/grafana/fqdn": {
       "display_name": "Grafana FQDN",
       "description": "Grafana FQDN",
