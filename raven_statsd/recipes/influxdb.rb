@@ -1,5 +1,5 @@
 remote_file "/tmp/influxdb_latest.rpm" do
-	source "http://s3.amazonaws.com/influxdb/influxdb-latest-1.x86_64.rpm"
+	source "https://s3.amazonaws.com/influxdb/influxdb-0.8.8-1.x86_64.rpm"
 end
 
 rpm_package "influxdb" do
@@ -22,6 +22,9 @@ log_dir = "#{node[:raven_statsd][:influxdb][:storage_dir]}/log"
 		user "influxdb"
 		group "influxdb"
 	end
+
+	# insure ownership is correct when initializing from an existing snapshot
+	execute "chown -R influxdb: #{d}"
 end
 
 template "/opt/influxdb/shared/config.toml" do
@@ -32,7 +35,7 @@ template "/opt/influxdb/shared/config.toml" do
 			:raft_dir => raft_dir,
 			:writeaheadlog_dir => wal_dir
 			})
-	notifies :restart, "service[influxdb]", :immediately
+	notifies :restart, "service[influxdb]", :delayed
 end
 
 service "influxdb" do

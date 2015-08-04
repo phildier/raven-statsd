@@ -1,39 +1,39 @@
 
 include_recipe "raven_statsd::default"
 
-grafana_tarball = "#{node[:raven_statsd][:tmp_dir]}/grafana.tar.gz"
-remote_file grafana_tarball do
-	source "http://grafanarel.s3.amazonaws.com/grafana-1.9.1.tar.gz"
+package "fontconfig"
+
+grafana_rpm = "#{node[:raven_statsd][:tmp_dir]}/grafana-2.1.0-1.x86_64.rpm"
+remote_file grafana_rpm do
+	source "https://grafanarel.s3.amazonaws.com/builds/grafana-2.1.0-1.x86_64.rpm"
 end
 
-directory node[:raven_statsd][:grafana][:install_dir] do
-	recursive true
+rpm_package grafana_rpm
+
+# temporary, until this in a release https://github.com/grafana/grafana/pull/2205
+cookbook_file "/etc/init.d/grafana-server" do
+	mode 0755
 end
 
-execute "unpack-grafana-tarball" do
-	command "tar xf #{grafana_tarball} -C #{node[:raven_statsd][:grafana][:install_dir]} --strip=1"
-	not_if { ::File.exists?("#{node[:raven_statsd][:grafana][:install_dir]}/config.sample.js") }
+directory node[:raven_statsd][:grafana][:data_dir] do
+	user "grafana"
+	group "grafana"
 end
 
-template "/etc/httpd/conf.d/grafana.conf" do
-	source "vhost.conf.erb"
+template "/etc/grafana/grafana.ini" do
+	source "grafana.ini.erb"
 	variables ({
-			:server_name => "grafana",
-			:document_root => node[:raven_statsd][:grafana][:install_dir],
-			:fqdn =>  node[:raven_statsd][:grafana][:fqdn]
+			:google_client_id => node[:raven_statsd][:google][:client_id],
+			:google_client_secret => node[:raven_statsd][:google][:client_secret],
+			:google_domain => node[:raven_statsd][:google][:domain],
+			:admin_username => node[:raven_statsd][:admin][:username],
+			:admin_password => node[:raven_statsd][:admin][:password],
+			:root_url => node[:raven_statsd][:server][:root_url],
+			:data_dir => node[:raven_statsd][:grafana][:data_dir]
 			})
-	notifies :restart, "service[httpd]", :delayed
+	notifies :restart, "service[grafana-server]", :delayed
 end
 
-template "#{node[:raven_statsd][:grafana][:install_dir]}/config.js" do
-	source "grafana-config.js.erb"
-	mode 0644
-	variables ({
-			:influxdb_host=> node[:raven_statsd][:influxdb][:host],
-			:influxdb_user=> node[:raven_statsd][:influxdb][:user],
-			:influxdb_password => node[:raven_statsd][:influxdb][:password],
-			:grafana_host => node[:raven_statsd][:grafana][:fqdn],
-			:password => "confirm",
-			:title_prefix => "Raven Graphs"
-			})
+service "grafana-server" do
+	action [ :start, :enable ]
 end

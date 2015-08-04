@@ -1,0 +1,13 @@
+{
+	"raven_statsd":{
+		"google":{
+			"client_id":"1234",
+			"client_secret":"4321",
+			"domain":"example.com"
+		},
+		"admin":{
+			"username":"admin",
+			"password":"admin"
+		}
+	}
+}
