@@ -6,11 +6,8 @@ description	  'Installs/Configures raven_statsd'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version		  '0.2.0'
 
-depends "influxdb"
 
 recipe "raven_statsd::default",			"install/configure dependencies"
-recipe "raven_statsd::epel",			"sets up epel repository"
-recipe "raven_statsd::bucky",			"install/configure bucky statsd daemon"
 recipe "raven_statsd::supervisor",		"install/configure supervisor and dependencies"
 recipe "raven_statsd::grafana",			"install/configure grafana"
 recipe "raven_statsd::influxdb",		"install/configure influxdb"

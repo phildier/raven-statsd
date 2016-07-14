@@ -1,27 +1,13 @@
 {
-  "name": "vagrant",
-  "description": "configure statsd in vagrant",
-  "json_class": "Chef::Role",
-  "default_attributes": {
-  },
-  "override_attributes": {
-	  "raven_statsd":{
-		  "influxdb":{
-			  "password":"cluhecs0"
-		  },
-		  "init_database":"true",
-		  "secret_key":"deadbeef"
-	  }
-  },
+	"name": "vagrant",
+	"description": "configure statsd in vagrant",
+	"json_class": "Chef::Role",
+	"default_attributes": {},
+	"override_attributes": {},
   "chef_type": "role",
   "run_list": [
-	"raven_statsd::vagrant",
-	"raven_statsd::epel",
-	"raven_statsd::influxdb",
-	"raven_statsd::bucky",
-	"raven_statsd::grafana",
-	"raven_statsd::test_script"
-  ],
-  "env_run_lists": {
-  }
+		"raven_statsd::influxdb",
+		"raven_statsd::grafana"
+	],
+	"env_run_lists": {}
 }
