@@ -7,7 +7,6 @@ long_description 	IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version						'0.3.0'
 
 
-recipe "raven_statsd::default",	"install/configure dependencies"
 recipe "raven_statsd::grafana",	"install/configure grafana"
 recipe "raven_statsd::influxdb",	"install/configure influxdb"
 recipe "raven_statsd::statsd_server",	"installs and configures all dependencies for a stats server"
@@ -89,7 +88,6 @@ attribute "raven_statsd/influxdb/adminuser",
 	:description => "InfluxDB admin user name",
 	:required => "required",
 	:type => "string",
-	:default => "admin",
 	:recipes => ["raven_statsd::influxdb","raven_statsd::statsd_server"]
 
 attribute "raven_statsd/influxdb/adminpass",
@@ -104,7 +102,6 @@ attribute "raven_statsd/influxdb/http_port",
 	:description => "InfluxDB http port",
 	:required => "required",
 	:type => "string",
-	:default => "8000",
 	:recipes => ["raven_statsd::influxdb","raven_statsd::grafana","raven_statsd::statsd_server"]
 
 attribute "raven_statsd/influxdb/collectd_port",
@@ -112,7 +109,6 @@ attribute "raven_statsd/influxdb/collectd_port",
 	:description => "InfluxDB collectd port",
 	:required => "required",
 	:type => "string",
-	:default => "8125",
 	:recipes => ["raven_statsd::influxdb","raven_statsd::statsd_server"]
 
 attribute "raven_statsd/influxdb/collectd_db",
@@ -120,7 +116,6 @@ attribute "raven_statsd/influxdb/collectd_db",
 	:description => "InfluxDB collectd db",
 	:required => "required",
 	:type => "string",
-	:default => "8125",
 	:recipes => ["raven_statsd::influxdb","raven_statsd::grafana","raven_statsd::statsd_server"]
 
 
