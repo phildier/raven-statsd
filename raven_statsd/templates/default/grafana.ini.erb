@@ -1,17 +1,95 @@
+
+
+instance_name = <%=@fqdn%>
+
 [paths]
-data = <%=@data_dir%>
+data = <%=@data_dir%>/grafana
+logs = <%=@data_dir%>/grafana
+plugins = <%=@data_dir%>/grafana/plugins
 
 [server]
-root_url = <%=@root_url%>
-http_port = 8000
+protocol = http
+http_port = <%=@http_port%>
+
+domain = <%=@fqdn%>
+enforce_domain = false
+
+# The full public facing url
+root_url = <%=@public_fqdn%>
+
+enable_gzip = true
+
+[database]
+type = sqlite3
+path = grafana.db
+
+[session]
+provider = file
+provider_config = sessions
+cookie_name = grafana_sess
+
+
+[analytics]
+reporting_enabled = false
+check_for_updates = false
 
 [security]
+# default admin user, created on startup
 admin_user = <%=@admin_username%>
 admin_password = <%=@admin_password%>
+login_remember_days = 30
+secret_key = <%=@secret_key%>
+
+
+[snapshots]
+external_enabled = false
+;external_snapshot_url = https://snapshots-origin.raintank.io
+;external_snapshot_name = Publish to snapshot.raintank.io
+
+[users]
+allow_sign_up = true
+allow_org_create = false
+auto_assign_org = true
+auto_assign_org_role = Editor
+;default_theme = dark
+
+[auth.anonymous]
+;enabled = false
+
+[auth.github]
+;enabled = false
 
 [auth.google]
 enabled = true
+allow_sign_up = true
 client_id = <%=@google_client_id%>
 client_secret = <%=@google_client_secret%>
+scopes = https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
+auth_url = https://accounts.google.com/o/oauth2/auth
+token_url = https://accounts.google.com/o/oauth2/token
+api_url = https://www.googleapis.com/oauth2/v1/userinfo
 allowed_domains = <%=@google_domain%>
-allow_sign_up = true
+
+[auth.basic]
+enabled = true
+
+[smtp]
+enabled = true
+host = localhost:25
+
+
+[emails]
+welcome_email_on_sign_up = false
+
+[log]
+mode = syslog
+
+# Either "trace", "debug", "info", "warn", "error", "critical", default is "info"
+level = info
+
+
+[metrics]
+enabled = true
+
+[grafana_net]
+url = https://grafana.net

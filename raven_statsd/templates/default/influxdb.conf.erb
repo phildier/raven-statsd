@@ -1,0 +1,53 @@
+
+reporting-disabled = true
+
+[meta]
+  dir = "<%=@base_dir%>/meta"
+  retention-autocreate = true
+  logging-enabled = true
+  pprof-enabled = false
+
+[data]
+  enabled = true
+  dir = "<%=@base_dir%>/data"
+  wal-dir = "<%=@base_dir%>/wal"
+  wal-logging-enabled = true
+  data-logging-enabled = true
+
+
+[retention]
+  enabled = true
+  check-interval = "30m"
+
+[monitor]
+  store-enabled = true # Whether to record statistics internally.
+  store-database = "_internal" # The destination database for recorded statistics
+  store-interval = "10s" # The interval at which to record statistics
+
+
+
+[http]
+  enabled = true
+  bind-address = ":<%=@http_port%>"
+  auth-enabled = true
+  log-enabled = true
+  write-tracing = false
+  pprof-enabled = false
+  https-enabled = false
+  max-row-limit = 10000
+
+
+[[collectd]]
+  enabled = true
+  bind-address = ":<%=@collect_port%>"
+  database = "<%=@collectd_port%>"
+  batch-size = 1000 # will flush if this many points get buffered
+  batch-pending = 5 # number of batches that may be pending in memory
+  batch-timeout = "1s" # will flush at least this often even if we haven't hit buffer limit
+  read-buffer = 0 # UDP Read buffer size, 0 means OS default. UDP listener will fail if set above OS max.
+
+
+[continuous_queries]
+  log-enabled = true
+  enabled = true
+  # run-interval = "1s" # interval for how often continuous queries will be checked if they need to run

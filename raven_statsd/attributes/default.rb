@@ -1,24 +1,22 @@
-default[:raven_statsd][:tmp_dir] = "/tmp/attachments"
-default[:raven_statsd][:attachment_url] =  "http://raven-opensource.s3.amazonaws.com"
 
-default[:raven_statsd][:supervisord][:port] = 9110
-default[:raven_statsd][:supervisord][:username] = "superuser"
-default[:raven_statsd][:supervisord][:password] = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
 
 default[:raven_statsd][:grafana][:fqdn] = "grafana.site"
-default[:raven_statsd][:grafana][:install_dir] = "/usr/share/grafana"
-default[:raven_statsd][:grafana][:public_dir] = "/usr/share/grafana/public"
+default[:raven_statsd][:grafana][:public_fqdn] = "http://grafana.site:8099"
 default[:raven_statsd][:grafana][:data_dir] = "/var/lib/grafana"
+default[:raven_statsd][:grafana][:http_port] = "8000"
+default[:raven_statsd][:grafana][:admin][:username] = "admin"
+default[:raven_statsd][:grafana][:admin][:password] = "admin"
+default[:raven_statsd][:grafana][:google][:client_id] = "your_id"
+default[:raven_statsd][:grafana][:google][:client_secret] = "your_sec"
+default[:raven_statsd][:grafana][:google][:domain] = "your_domain"
 
-default[:raven_statsd][:influxdb][:host] = "grafana.site:8086"
+
 default[:raven_statsd][:influxdb][:user] = "grafana"
 default[:raven_statsd][:influxdb][:password] = "grafana"
-default[:raven_statsd][:influxdb][:storage_dir] = "/var/lib/influxdb"
-
-default[:raven_statsd][:server][:root_url] = 'http://localhost:8099/'
-default[:raven_statsd][:google][:client_id] = nil
-default[:raven_statsd][:google][:client_secret] = nil
-default[:raven_statsd][:google][:domain] = "example.com"
-default[:raven_statsd][:admin][:username] = "admin"
-default[:raven_statsd][:admin][:password] = "admin"
-
+default[:raven_statsd][:influxdb][:adminuser] = "admin"
+default[:raven_statsd][:influxdb][:adminpass] = "admin"
+default[:raven_statsd][:influxdb][:dbs] = ["collectd","grafana"]
+default[:raven_statsd][:influxdb][:base_dir] = "/var/lib/influxdb"
+default[:raven_statsd][:influxdb][:http_port] = "8086"
+default[:raven_statsd][:influxdb][:collect_port] = "8125"
+default[:raven_statsd][:influxdb][:collectd_db] = "collectd"

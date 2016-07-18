@@ -1,53 +1,45 @@
-remote_file "/tmp/influxdb_latest.rpm" do
-	source "https://s3.amazonaws.com/influxdb/influxdb-0.8.8-1.x86_64.rpm"
+chef_gem 'influxdb' do
+  compile_time false
 end
 
-rpm_package "influxdb" do
-	source "/tmp/influxdb_latest.rpm"
+package "influxdb"
+package "collectd"
+
+directory node[:raven_statsd][:influxdb][:base_dir] do
+	action :create
+	owner 'influxdb'
+	group 'influxdb'
+	mode '0755'
 end
 
-db_dir = "#{node[:raven_statsd][:influxdb][:storage_dir]}/db"
-wal_dir = "#{node[:raven_statsd][:influxdb][:storage_dir]}/wal"
-raft_dir = "#{node[:raven_statsd][:influxdb][:storage_dir]}/raft"
-log_dir = "#{node[:raven_statsd][:influxdb][:storage_dir]}/log"
-
-[
-	db_dir,
-	wal_dir,
-	raft_dir,
-	log_dir,
-].each do |d|
-	directory d do
-		recursive true
-		user "influxdb"
-		group "influxdb"
-	end
-
-	# insure ownership is correct when initializing from an existing snapshot
-	execute "chown -R influxdb: #{d}"
-end
-
-template "/opt/influxdb/shared/config.toml" do
-	source "config.toml.erb"
+template "/etc/influxdb/influxdb.conf" do
+	source "influxdb.conf.erb"
 	variables ({
-			:log_file => "#{log_dir}/influxdb.log",
-			:storage_dir => db_dir,
-			:raft_dir => raft_dir,
-			:writeaheadlog_dir => wal_dir
+			:base_dir => node[:raven_statsd][:influxdb][:base_dir],
+			:http_port => node[:raven_statsd][:influxdb][:http_port],
+			:collect_port => node[:raven_statsd][:influxdb][:collect_port],
+			:collectd_db => node[:raven_statsd][:influxdb][:collectd_db],
 			})
-	notifies :restart, "service[influxdb]", :delayed
+	notifies :restart, "service[influxdb]"
 end
 
 service "influxdb" do
 	action [:start, :enable]
 end
 
-if_dbs = ["stats","grafana"]
-if_dbs.each do |db|
-	influxdb_database db
-end
-
-influxdb_user node[:raven_statsd][:influxdb][:user] do
-	password node[:raven_statsd][:influxdb][:password]
-	dbadmin if_dbs
+ruby_block 'create_influx_stuff' do
+	block do
+		require 'influxdb'
+		influx_client =  InfluxDB::Client.new(  username: node[:raven_statsd][:influxdb][:adminuser] , password: node[:raven_statsd][:influxdb][:adminpass] , retry: 10 )
+		influx_client.create_cluster_admin(node[:raven_statsd][:influxdb][:adminuser],node[:raven_statsd][:influxdb][:adminpass])
+		influx_client.create_database("test")
+		influx_client.create_database_user("test",node[:raven_statsd][:influxdb][:user],node[:raven_statsd][:influxdb][:password])
+		node[:raven_statsd][:influxdb][:dbs].each do |db|
+				next if influx_client.list_databases.map { |x| x['name'] }.member?(db)
+				influx_client.create_database(db)
+		end
+		node[:raven_statsd][:influxdb][:dbs].each do |db|
+				influx_client.grant_user_privileges(node[:raven_statsd][:influxdb][:user],db,:all)
+		end
+	end
 end
