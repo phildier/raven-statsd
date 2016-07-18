@@ -25,23 +25,21 @@ service "grafana-server" do
 	action [ :start, :enable ]
 end
 
-my_auth = Base64.encode64("#{node[:raven_statsd][:grafana][:admin][:username]}:#{node[:raven_statsd][:grafana][:admin][:password]}")
+my_message = {
+	"name" => 'local_influxdb',
+	"type" => 'influxdb',
+	"access" => 'direct',
+	"url" => "http://127.0.0.1:#{node[:raven_statsd][:influxdb][:http_port]}",
+	"password" => node[:raven_statsd][:influxdb][:password],
+	"user" => node[:raven_statsd][:influxdb][:user],
+	"database" => node[:raven_statsd][:influxdb][:collectd_db],
+	"isDefault" => true
+}.to_json
 
-http_request 'create_influxdb_data_source' do
+
+bash 'create_influxdb_data_source' do
 	not_if "curl -s http://#{node[:raven_statsd][:grafana][:admin][:username]}:#{node[:raven_statsd][:grafana][:admin][:password]}@127.0.0.1:#{node[:raven_statsd][:grafana][:http_port]}/api/datasources |grep -q id"
-	action :post
-	url "http://127.0.0.1:#{node[:raven_statsd][:grafana][:http_port]}/api/datasources"
-	headers({'Authorization' => "Basic #{my_auth}",
-		'Content-Type' => 'application/json'
-		})
-	message ({
-		"name" => 'local_influxdb',
-		"type" => 'influxdb',
-		"access" => 'direct',
-		"url" => "http://localhost:#{node[:raven_statsd][:influxdb][:http_port]}",
-		"password" => node[:raven_statsd][:influxdb][:password],
-		"user" => node[:raven_statsd][:influxdb][:user],
-		"database" => node[:raven_statsd][:influxdb][:collectd_db],
-		"isDefault" => true
-	}.to_json)
+	code <<-EOH
+	curl -H 'Content-Type: application/json' -X POST -d '#{my_message}' -s http://#{node[:raven_statsd][:grafana][:admin][:username]}:#{node[:raven_statsd][:grafana][:admin][:password]}@127.0.0.1:#{node[:raven_statsd][:grafana][:http_port]}/api/datasources 2>&1 >>/tmp/tmp
+	EOH
 end
