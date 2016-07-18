@@ -40,6 +40,7 @@ my_message = {
 bash 'create_influxdb_data_source' do
 	not_if "curl -s http://#{node[:raven_statsd][:grafana][:admin][:username]}:#{node[:raven_statsd][:grafana][:admin][:password]}@127.0.0.1:#{node[:raven_statsd][:grafana][:http_port]}/api/datasources |grep -q id"
 	code <<-EOH
+	sleep 10
 	curl -H 'Content-Type: application/json' -X POST -d '#{my_message}' -s http://#{node[:raven_statsd][:grafana][:admin][:username]}:#{node[:raven_statsd][:grafana][:admin][:password]}@127.0.0.1:#{node[:raven_statsd][:grafana][:http_port]}/api/datasources 2>&1 >>/tmp/tmp
 	EOH
 end
