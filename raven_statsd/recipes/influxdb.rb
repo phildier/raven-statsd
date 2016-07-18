@@ -15,8 +15,12 @@ template "/etc/influxdb/influxdb.conf" do
 	variables ({
 			:base_dir => node[:raven_statsd][:influxdb][:base_dir],
 			:http_port => node[:raven_statsd][:influxdb][:http_port],
-			:collect_port => node[:raven_statsd][:influxdb][:collect_port],
+			:enable_graphite => node[:raven_statsd][:influxdb][:enable_collectd],
+			:collectd_port => node[:raven_statsd][:influxdb][:collectd_port],
 			:collectd_db => node[:raven_statsd][:influxdb][:collectd_db],
+			:enable_graphite => node[:raven_statsd][:influxdb][:enable_graphite],
+			:graphite_port => node[:raven_statsd][:influxdb][:graphite_port],
+			:graphite_db => node[:raven_statsd][:influxdb][:graphite_db]
 			})
 	notifies :restart, "service[influxdb]"
 end

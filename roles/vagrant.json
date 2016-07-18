@@ -7,6 +7,7 @@
   "chef_type": "role",
   "run_list": [
 		"raven_statsd::influxdb",
+		"raven_statsd::bucky",
 		"raven_statsd::grafana"
 	],
 	"env_run_lists": {}
