@@ -111,7 +111,7 @@ attribute "raven_statsd/influxdb/collectd_port",
 	:display_name => "InfluxDB collectd port",
 	:description => "InfluxDB collectd port",
 	:required => "required",
-	:type => "string"
+	:type => "string",
 	:default => "8125",
 	:recipes => ["raven_statsd::influxdb","raven_statsd::statsd_server"]
 
@@ -119,7 +119,7 @@ attribute "raven_statsd/influxdb/collectd_db",
 	:display_name => "InfluxDB collectd db",
 	:description => "InfluxDB collectd db",
 	:required => "required",
-	:type => "string"
+	:type => "string",
 	:default => "8125",
 	:recipes => ["raven_statsd::influxdb","raven_statsd::grafana","raven_statsd::statsd_server"]
 
