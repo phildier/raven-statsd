@@ -11,14 +11,21 @@ recipe "raven_statsd::grafana",	"install/configure grafana"
 recipe "raven_statsd::influxdb",	"install/configure influxdb"
 recipe "raven_statsd::statsd_server",	"installs and configures all dependencies for a stats server"
 
-attribute "raven_statsd/server/fqdn",
+attribute "raven_statsd/grafana/fqdn",
 	:display_name => "Grafana host name",
 	:description => "Grafana host name",
 	:required => "required",
 	:type => "string",
 	:recipes => ["raven_statsd::grafana","raven_statsd::statsd_server"]
 
-attribute "raven_statsd/server/public_fqdn",
+attribute "raven_statsd/grafana/http_port",
+		:display_name => "Grafana http port",
+		:description => "Grafana http port",
+		:required => "required",
+		:type => "string",
+		:recipes => ["raven_statsd::grafana","raven_statsd::statsd_server"]
+
+attribute "raven_statsd/grafana/public_fqdn",
 	:display_name => "Grafana public url",
 	:description => "Grafana public url",
 	:required => "required",
