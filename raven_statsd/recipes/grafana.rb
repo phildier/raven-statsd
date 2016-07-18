@@ -28,11 +28,12 @@ end
 my_auth = Base64.encode64("#{node[:raven_statsd][:grafana][:admin][:username]}:#{node[:raven_statsd][:grafana][:admin][:password]}")
 
 http_request 'create_influxdb_data_source' do
+	not_if "curl -s http://#{node[:raven_statsd][:grafana][:admin][:username]}:#{node[:raven_statsd][:grafana][:admin][:password]}@127.0.0.1:#{node[:raven_statsd][:grafana][:http_port]}/api/datasources |grep -q id"
 	action :post
 	url "http://127.0.0.1:#{node[:raven_statsd][:grafana][:http_port]}/api/datasources"
 	headers({'Authorization' => "Basic #{my_auth}",
-    'Content-Type' => 'application/json'
-  })
+		'Content-Type' => 'application/json'
+		})
 	message ({
 		"name" => 'local_influxdb',
 		"type" => 'influxdb',
