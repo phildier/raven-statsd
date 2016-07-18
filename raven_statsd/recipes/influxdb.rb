@@ -1,6 +1,4 @@
-chef_gem 'influxdb' do
-  compile_time false
-end
+chef_gem 'influxdb'
 
 package "influxdb"
 package "collectd"
