@@ -8,7 +8,7 @@ require 'statsd-ruby'
 
 s = Statsd.new 'localhost', 8125
 
-(1..100).each {
+(1..2).each {
 	s.increment('app.test.one')
 }
 	EOH

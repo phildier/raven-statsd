@@ -32,7 +32,7 @@ my_message = {
 	"url" => "http://127.0.0.1:#{node[:raven_statsd][:influxdb][:http_port]}",
 	"password" => node[:raven_statsd][:influxdb][:password],
 	"user" => node[:raven_statsd][:influxdb][:user],
-	"database" => node[:raven_statsd][:influxdb][:collectd_db],
+	"database" => node[:raven_statsd][:influxdb][:graphite_db],
 	"isDefault" => true
 }.to_json
 
