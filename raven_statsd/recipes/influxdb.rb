@@ -1,7 +1,7 @@
 chef_gem 'influxdb'
 
 package "influxdb"
-package "collectd"
+package "raven-collectd"
 
 directory node[:raven_statsd][:influxdb][:base_dir] do
 	action :create
@@ -15,7 +15,7 @@ template "/etc/influxdb/influxdb.conf" do
 	variables ({
 			:base_dir => node[:raven_statsd][:influxdb][:base_dir],
 			:http_port => node[:raven_statsd][:influxdb][:http_port],
-			:enable_graphite => node[:raven_statsd][:influxdb][:enable_collectd],
+			:enable_collectd => node[:raven_statsd][:influxdb][:enable_collectd],
 			:collectd_port => node[:raven_statsd][:influxdb][:collectd_port],
 			:collectd_db => node[:raven_statsd][:influxdb][:collectd_db],
 			:enable_graphite => node[:raven_statsd][:influxdb][:enable_graphite],
