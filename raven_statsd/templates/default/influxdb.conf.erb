@@ -46,6 +46,7 @@ reporting-disabled = true
 	batch-pending = 5 # number of batches that may be pending in memory
 	batch-timeout = "1s" # will flush at least this often even if we haven't hit buffer limit
 	read-buffer = 0 # UDP Read buffer size, 0 means OS default. UDP listener will fail if set above OS max.
+	typesdb = "/opt/raven-collectd/share/collectd/types.db"
 <%end %>
 
 <% if @enable_graphite then %>
