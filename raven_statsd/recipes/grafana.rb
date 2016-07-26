@@ -47,7 +47,7 @@ end
 message_statsd = {
 	"name" => 'local_influxdb_statsd',
 	"type" => 'influxdb',
-	"access" => 'direct',
+	"access" => 'proxy',
 	"url" => "http://127.0.0.1:#{node[:raven_statsd][:influxdb][:http_port]}",
 	"password" => node[:raven_statsd][:influxdb][:password],
 	"user" => node[:raven_statsd][:influxdb][:user],
@@ -58,7 +58,7 @@ message_statsd = {
 message_collectd = {
 	"name" => 'local_influxdb_collectd',
 	"type" => 'influxdb',
-	"access" => 'direct',
+	"access" => 'proxy',
 	"url" => "http://127.0.0.1:#{node[:raven_statsd][:influxdb][:http_port]}",
 	"password" => node[:raven_statsd][:influxdb][:password],
 	"user" => node[:raven_statsd][:influxdb][:user],
