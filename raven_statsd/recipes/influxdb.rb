@@ -1,4 +1,6 @@
-chef_gem 'influxdb'
+chef_gem "influxdb" do
+	version "0.2.3"
+end
 
 package "influxdb"
 package "raven-collectd"
