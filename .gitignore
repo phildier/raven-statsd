@@ -4,3 +4,4 @@
 berks-cookbooks
 Berksfile.lock
 overrides.json
+*.un~
